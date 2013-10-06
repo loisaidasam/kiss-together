@@ -74,10 +74,14 @@
             updateScores();
         });
 
-        var TogetherJSConfig_autoStart = true;
-        var TogetherJSConfig_on_ready = function () {
-            console.log("togetherjs ready!");
-        };
+        TogetherJSConfig_autoStart = true;
+        TogetherJSConfig_findRoom = {prefix: "com_samsandberg_kiss", max: 5};
+        TogetherJSConfig_suppressJoinConfirmation = true;
+        TogetherJSConfig_storagePrefix = "ss_kiss";
+
+        // var TogetherJSConfig_on_ready = function () {
+        //     console.log("togetherjs ready!");
+        // };
     });
 </script>
 </body>
