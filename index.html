@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>Kiss</title>
+    <script src="https://togetherjs.com/togetherjs-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+
+<p id="score"></p>
+
+<!-- image from http://7daystime.files.wordpress.com/2012/08/kiss-lips.jpg -->
+<p><img id="lips" src="lips.jpg" /></p>
+
+<script>
+    var scores = {
+        "me": 0,
+    };
+
+    $( document ).ready(function() {
+        function returnToOriginalSize() {
+            $("#lips").css({height: "12.44", width: "14.76"});
+        }
+        returnToOriginalSize();
+
+        function updateScores() {
+            var score_text = "Scores:\n";
+            for (var key in scores) {
+                score_text += (key + ": " + scores[key] + "\n");
+            }
+            $("#score").text(score_text);
+        }
+        updateScores();
+
+        $("#lips").click(function () {
+            returnToOriginalSize();
+            scores["me"]++;
+            updateScores();
+
+            if (TogetherJS.running) {
+                TogetherJS.send({type: "lipsclick"});
+            }
+        });
+
+        function makeBigger() {
+            $("#lips").css({height: '+=5%', width: '+=5%'});
+        }
+        function biggerLoop() {
+            makeBigger();
+            setTimeout(function () {
+                biggerLoop();
+            }, 200);
+        }
+        // Start the loop
+        biggerLoop();
+
+
+        TogetherJS.hub.on("lipsclick", function (msg) {
+            console.log("lipsclick()");
+            console.log(msg);
+            if (! scores[msg.peer.name]) {
+                scores[msg.peer.name] = 0;
+            }
+            scores[msg.peer.name]++;
+            updateScores();
+            returnToOriginalSize();
+        });
+
+        TogetherJS.hub.on("togetherjs.hello", function (msg) {
+            console.log("togetherjs.hello()");
+            console.log(msg);
+            scores[msg.name] = 0;
+            updateScores();
+        });
+
+        var TogetherJSConfig_autoStart = true;
+        var TogetherJSConfig_on_ready = function () {
+            console.log("togetherjs ready!");
+        };
+    });
+</script>
+</body>
+</html>
