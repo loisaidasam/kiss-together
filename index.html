@@ -17,6 +17,11 @@
         "me": 0,
     };
 
+    TogetherJSConfig_autoStart = true;
+    TogetherJSConfig_findRoom = {prefix: "com_samsandberg_kiss", max: 5};
+    TogetherJSConfig_suppressJoinConfirmation = true;
+    TogetherJSConfig_storagePrefix = "ss_kiss";
+
     $( document ).ready(function() {
         function returnToOriginalSize() {
             $("#lips").css({height: "12.44", width: "14.76"});
@@ -72,11 +77,6 @@
             scores[msg.name] = 0;
             updateScores();
         });
-
-        TogetherJSConfig_autoStart = true;
-        TogetherJSConfig_findRoom = {prefix: "com_samsandberg_kiss", max: 5};
-        TogetherJSConfig_suppressJoinConfirmation = true;
-        TogetherJSConfig_storagePrefix = "ss_kiss";
 
         // var TogetherJSConfig_on_ready = function () {
         //     console.log("togetherjs ready!");
